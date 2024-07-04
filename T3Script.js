@@ -3,6 +3,7 @@ let resetBtn = document.querySelector("#reset-btn");
 let newGameBtn = document.querySelector("#new-btn");
 let msgContainer = document.querySelector(".msg-container");
 let msg = document.querySelector("#msg");
+let audio = document.getElementById('background-music');
 
 let turnO = true; // playerO starts
 let count = 0; // To track the number of moves
@@ -23,6 +24,8 @@ const resetGame = () => {
     count = 0;
     enableBoxes();
     msgContainer.classList.add("hide");
+    audio.pause(); // Pause the background music
+    audio.currentTime = 0;
 };
 
 boxes.forEach((box) => {
@@ -50,7 +53,12 @@ boxes.forEach((box) => {
 const gameDraw = () => {
     msg.innerText = `Game was a Draw.`;
     msgContainer.classList.remove("hide");
+    audio.play();
     disableBoxes();
+    setTimeout(() => {
+        msgContainer.classList.add("hide");
+        resetGame();
+    }, 3000); // Display the draw message for 3 seconds
 };
 
 const disableBoxes = () => {
@@ -71,7 +79,12 @@ const showWinner = (winner) => {
     msg.style.fontSize = "38px";
     msg.style.color = "white";
     msgContainer.classList.remove("hide");
+    audio.play();
     disableBoxes();
+    setTimeout(() => {
+        msgContainer.classList.add("hide");
+        resetGame();
+    }, 3000); // Display the winner message for 3 seconds
 };
 
 const checkWinner = () => {
